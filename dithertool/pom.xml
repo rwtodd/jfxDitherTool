@@ -2,7 +2,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>rwt</groupId>
-    <artifactId>cgaify</artifactId>
+    <artifactId>dithertool</artifactId>
     <version>1.0</version>
     <packaging>jar</packaging>
         
@@ -39,12 +39,18 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
-                            <mainClass>rwt.cgaify.MainApp</mainClass>
+                            <mainClass>rwt.dithertool.MainApp</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
             </plugin>   
         </plugins>
-    </build>   
-    
+    </build>
+    <dependencies>
+        <dependency>
+            <groupId>com.waywardcode</groupId>
+            <artifactId>dither</artifactId>
+            <version>1.0</version>
+        </dependency>
+    </dependencies>
 </project>

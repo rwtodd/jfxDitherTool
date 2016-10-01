@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Dimension2D?>
+<?import javafx.collections.FXCollections?>
+
+<VBox xmlns:fx="http://javafx.com/fxml/1" styleClass="mainFxmlClass"  
+      fx:controller="rwt.dithertool.DimensionsChooserController">
+    <stylesheets>
+        <URL value="@/styles/dimensionschooser.css"/>
+    </stylesheets>
+    <HBox>
+        <Label>Common Dimensions:</Label>
+        <ComboBox fx:id="typicalList">
+            <items>
+                <FXCollections fx:factory="observableArrayList">
+                  <Dimension2D width="320" height="200" />
+                  <Dimension2D width="640" height="480" />
+                  <Dimension2D width="800" height="600" />
+                  <Dimension2D width="1024" height="768" />  
+                  <Dimension2D width="0" height="0" />    
+                </FXCollections>           
+            </items>
+        </ComboBox>
+    </HBox>
+    <HBox fx:id="customOptions">
+        <Label>Custom:</Label>
+        <TextField fx:id="customWidth" promptText="width" prefColumnCount="5"  />
+        <Label>x</Label>
+        <TextField fx:id="customHeight" promptText="height" prefColumnCount="5"  />   
+    </HBox>
+    
+    <ButtonBar>
+        <buttons>
+           <Button onAction="#btnApply">Apply</Button>
+           <Button onAction="#btnClose">Close</Button>    
+        </buttons>
+    </ButtonBar>
+</VBox>
