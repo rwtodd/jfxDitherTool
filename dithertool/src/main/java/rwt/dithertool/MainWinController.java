@@ -19,7 +19,6 @@ import javafx.event.ActionEvent;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import com.waywardcode.dither.colors.*;
 import com.waywardcode.dither.*;
@@ -37,6 +36,7 @@ public class MainWinController implements Initializable {
     // define the nodes from the fxml we need to access...
     @FXML private Label fnameLabel;
     @FXML private Label dimensionsLabel;
+    @FXML private Label paletteLabel;
     @FXML private ImageView srcImage;
     @FXML private ImageView ditheredImage;
     
@@ -44,6 +44,7 @@ public class MainWinController implements Initializable {
     private ObjectProperty<Dimension2D> scaledDim;
     private ObjectProperty<File> srcFile;
     private ObjectProperty<Ditherer> ditherer;
+    private ObjectProperty<PaletteInfo> palette;
     
     /**
      * Initializes the controller class.
@@ -52,15 +53,21 @@ public class MainWinController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         scaledDim = new SimpleObjectProperty<>(new Dimension2D(320, 200));
         srcFile = new SimpleObjectProperty<>(null);
+        palette = new SimpleObjectProperty<>(new PaletteInfo(StandardPalette.EGA));        
+        ditherer = new SimpleObjectProperty<>();
         
-        final Color[] cgaColors = new Color[4];
-        cgaColors[0] = Color.BLACK;
-        cgaColors[1] = Color.CYAN;
-        cgaColors[2] = Color.MAGENTA;
-        cgaColors[3] = Color.WHITE;
+        // bind the ditherer to the palette....
+        ditherer.bind(new ObjectBinding<Ditherer>() {
+            { bind(palette); }
+            
+            @Override
+            protected Ditherer computeValue() {
+                ColorSelector selector = ColorSelectionFactory.getInstance(palette.get().colors, new NaiveMetric());
+                return (new NaiveDither(selector));
+            }
+            
+        });
         
-        ColorSelector selector = ColorSelectionFactory.getInstance(cgaColors, new NaiveMetric());
-        ditherer = new SimpleObjectProperty<>(new NaiveDither(selector));
         
         // bind dimensions to the UI label
         dimensionsLabel.textProperty().bind(new StringBinding() {
@@ -89,6 +96,17 @@ public class MainWinController implements Initializable {
                 File f = srcFile.get();
                 return (f == null)?"No File":f.getName();
             }
+        });
+        
+        // bind the palette selected to the palette label        
+        paletteLabel.textProperty().bind(new StringBinding() { 
+                { bind(palette); }
+
+            @Override
+            protected String computeValue() {
+                return palette.get().name;
+            }
+                
         });
         
         //bind the source image to the dimensions and file...
@@ -160,6 +178,24 @@ public class MainWinController implements Initializable {
           dims.setTitle("Dimensions Chooser");
           dims.sizeToScene();
           dims.show();
+        } catch(java.io.IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+    
+    @FXML private void getNewPalette(ActionEvent ae) {
+        // create a child window...
+        try {
+          Stage pals = new Stage(StageStyle.DECORATED);
+          FXMLLoader ldr = new FXMLLoader(getClass().getResource("/fxml/PaletteChooser.fxml"));
+          Parent root = ldr.load();
+          PaletteChooserController pcc = ldr.getController();
+          pcc.tieToParent(pals, palette);
+          Scene sc = new Scene(root);
+          pals.setScene(sc);
+          pals.setTitle("Palette Chooser");
+          pals.sizeToScene();
+          pals.show();
         } catch(java.io.IOException ex) {
             ex.printStackTrace();
         }

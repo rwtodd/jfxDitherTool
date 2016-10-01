@@ -21,6 +21,10 @@
                 <Label fx:id="dimensionsLabel" />
                 <Button onAction="#getNewDims">...</Button>
             </HBox>
+            <HBox>
+                <Label fx:id="paletteLabel" />
+                <Button onAction="#getNewPalette">...</Button>
+            </HBox>
         </FlowPane>
     </top>
     <center>

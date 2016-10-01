@@ -12,7 +12,7 @@
 <VBox xmlns:fx="http://javafx.com/fxml/1" styleClass="mainFxmlClass"  
       fx:controller="rwt.dithertool.DimensionsChooserController">
     <stylesheets>
-        <URL value="@/styles/dimensionschooser.css"/>
+        <URL value="@/styles/chooserStyles.css"/>
     </stylesheets>
     <HBox>
         <Label>Common Dimensions:</Label>

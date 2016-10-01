@@ -13,11 +13,11 @@
     -fx-alignment: CENTER;
 }
 
-
 VBox.imgPane {
   -fx-alignment: center;
   -fx-background-color: white;
 }
+
 ScrollPane {
     -fx-pannable: true;
 }
