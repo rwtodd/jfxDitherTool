@@ -20,5 +20,5 @@ public class Sierra3 extends ErrDiffusionDither {
               2);
     }
     
-    @Override public String toString() { return "Sierra Lite 2-4A"; }        
+    @Override public String toString() { return "Sierra-3"; }        
 }

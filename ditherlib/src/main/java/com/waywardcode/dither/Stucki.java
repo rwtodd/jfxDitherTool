@@ -22,6 +22,6 @@ public class Stucki extends ErrDiffusionDither {
               2);
     }
     
-    @Override public String toString() { return "Jarvis Judice Ninke"; }        
+    @Override public String toString() { return "Stucki"; }        
     
 }

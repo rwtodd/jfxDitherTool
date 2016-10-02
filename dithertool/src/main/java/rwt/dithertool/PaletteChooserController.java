@@ -8,17 +8,11 @@ package rwt.dithertool;
 import com.waywardcode.dither.colors.StandardPalette;
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.beans.binding.Bindings;
-import javafx.beans.binding.ListBinding;
 import javafx.beans.property.ObjectProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
 import javafx.fxml.*;
-import javafx.geometry.Dimension2D;
-import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -42,6 +36,7 @@ public class PaletteChooserController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
         for(StandardPalette sp: StandardPalette.values()) {
             typicalList.getItems().add(new PaletteInfo(sp));
         }

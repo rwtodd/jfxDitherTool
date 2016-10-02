@@ -37,15 +37,16 @@ public class MainWinController implements Initializable {
     @FXML private Label fnameLabel;
     @FXML private Label dimensionsLabel;
     @FXML private Label paletteLabel;
+    @FXML private Label ditherLabel;   
     @FXML private ImageView srcImage;
     @FXML private ImageView ditheredImage;
     
     // define the properties we care about ...
     private ObjectProperty<Dimension2D> scaledDim;
     private ObjectProperty<File> srcFile;
-    private ObjectProperty<Ditherer> ditherer;
     private ObjectProperty<PaletteInfo> palette;
-    
+    private ObjectProperty<DitherParms> ditherParms;
+   
     /**
      * Initializes the controller class.
      */
@@ -54,22 +55,10 @@ public class MainWinController implements Initializable {
         scaledDim = new SimpleObjectProperty<>(new Dimension2D(320, 200));
         srcFile = new SimpleObjectProperty<>(null);
         palette = new SimpleObjectProperty<>(new PaletteInfo(StandardPalette.EGA));        
-        ditherer = new SimpleObjectProperty<>();
-        
-        // bind the ditherer to the palette....
-        ditherer.bind(new ObjectBinding<Ditherer>() {
-            { bind(palette); }
-            
-            @Override
-            protected Ditherer computeValue() {
-//                ColorMetric cm = new NaiveMetric();
-                ColorMetric cm = new RGBLumosityMetric(); 
-                ColorSelector selector = ColorSelectionFactory.getInstance(palette.get().colors, cm);
-                return (new Stucki(selector));
-            }
-            
-        });
-        
+        ditherParms = new SimpleObjectProperty<>(
+                new DitherParms(DitherParms.Algorithm.NoDither, 
+                                DitherParms.Metric.Euclidean));
+                
         
         // bind dimensions to the UI label
         dimensionsLabel.textProperty().bind(new StringBinding() {
@@ -111,6 +100,17 @@ public class MainWinController implements Initializable {
                 
         });
         
+        // bind the current ditherparms to the UI label
+        ditherLabel.textProperty().bind(new StringBinding() {
+                { bind(ditherParms); }
+
+            @Override
+            protected String computeValue() {
+                return ditherParms.get().selectedAlgo.toString();
+            }
+                
+        });
+        
         //bind the source image to the dimensions and file...
         srcImage.imageProperty().bind(new ObjectBinding<Image>() { 
             {
@@ -143,17 +143,36 @@ public class MainWinController implements Initializable {
         // bind the target image to the src image and the ditherer...
         ditheredImage.imageProperty().bind(new ObjectBinding<Image>() { 
             {
-                bind(srcImage.imageProperty(), ditherer);
+                bind(srcImage.imageProperty(), palette, ditherParms );
             }
 
             @Override
             protected Image computeValue() {
                 Image src = srcImage.imageProperty().get();
-                Ditherer d = ditherer.get();
-                if(src == null || d == null) {
+                DitherParms dp = ditherParms.get();
+                PaletteInfo pi = palette.get();
+                if(src == null || dp == null || pi == null) {
                     return null;
                 }
-                return d.dither(src);
+                
+                // maybe make a factory later, but for now just switches...
+                ColorMetric cm;
+                switch(dp.selectedMetric) {
+                    case RGBLumin:   cm = new RGBLumosityMetric(); break;
+                    default:         cm = new NaiveMetric(); break;
+                }
+                ColorSelector selector = ColorSelectionFactory.getInstance(pi.colors, cm);
+                
+                Ditherer dither;
+                switch(dp.selectedAlgo) {
+                    case FloydSteinberg:  dither = new FloydSteinberg(selector); break;
+                    case Jarvis:          dither = new JarvisJudiceNinke(selector); break;
+                    case Stucki:          dither = new Stucki(selector); break;
+                    case Sierra3:  dither = new Sierra3(selector); break;
+                    case Sierra24A:  dither = new Sierra24A(selector); break;
+                    default:  dither = new NaiveDither(selector);
+                }
+                return dither.dither(src);
             }
         });
     }
@@ -202,4 +221,24 @@ public class MainWinController implements Initializable {
             ex.printStackTrace();
         }
     }
+    
+    @FXML private void getNewDither(ActionEvent ae) {
+        // create a child window...
+        try {
+          Stage dipm = new Stage(StageStyle.DECORATED);
+          FXMLLoader ldr = new FXMLLoader(getClass().getResource("/fxml/DitherParmsChooser.fxml"));
+          Parent root = ldr.load();
+          DitherParmsChooserController dpcc = ldr.getController();
+          dpcc.tieToParent(dipm, ditherParms);
+          Scene sc = new Scene(root);
+          dipm.setScene(sc);
+          dipm.setTitle("Dither Chooser");
+          dipm.sizeToScene();
+          dipm.show();
+        } catch(java.io.IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+    
+    
 }

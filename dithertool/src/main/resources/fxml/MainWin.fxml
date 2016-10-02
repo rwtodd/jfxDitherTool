@@ -25,6 +25,10 @@
                 <Label fx:id="paletteLabel" />
                 <Button onAction="#getNewPalette">...</Button>
             </HBox>
+            <HBox>
+                <Label fx:id="ditherLabel" />
+                <Button onAction="#getNewDither">...</Button>
+            </HBox>
         </FlowPane>
     </top>
     <center>
