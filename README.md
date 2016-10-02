@@ -15,6 +15,6 @@ display of the product with the original.
 
 Here's a screenshot:
 
-![example.png](example.png)
+![example.PNG](example.PNG)
 
 [1]: https://github.com/rwtodd/cgaify
