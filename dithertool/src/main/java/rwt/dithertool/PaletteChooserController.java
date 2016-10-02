@@ -45,26 +45,13 @@ public class PaletteChooserController implements Initializable {
         for(StandardPalette sp: StandardPalette.values()) {
             typicalList.getItems().add(new PaletteInfo(sp));
         }
-        
-        // bind the contents of the colordisplay to the selected list...
-        Bindings.bindContent(colorDisplay.getChildren(),
-                new ListBinding<Node>() {
-                    { bind(typicalList.valueProperty()); }
-                    
-            @Override
-            protected ObservableList<Node> computeValue() {
-                PaletteInfo pi = typicalList.getValue();
-                if(pi == null) return null;
-                
-                final ObservableList<Node> answer = FXCollections.observableArrayList();
-                for(Color c: pi.colors) {
-                    Rectangle box = new Rectangle(20, 20, c);
-                    box.getStyleClass().add("colorChoice");
-                    answer.add(box);
-                }
-                return answer;
-            }
 
+        typicalList.valueProperty().addListener((xx,ov,nv) -> {
+            colorDisplay.getChildren().clear();
+            for(Color c: nv.colors) {
+                colorDisplay.getChildren().add(new Rectangle(20,20,c));
+                if(myStage != null) myStage.sizeToScene();
+            }
         });
     }        
     

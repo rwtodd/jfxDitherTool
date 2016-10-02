@@ -10,7 +10,6 @@ import javafx.scene.image.PixelWriter;
 import com.waywardcode.dither.colors.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
-import javafx.scene.paint.Color;
 
 /**
  * Performs no actual dithering... just replaces each 
@@ -44,5 +43,6 @@ public final class NaiveDither implements Ditherer {
         
         return output;
     }
-    
+
+    @Override public String toString() { return "No Dither"; }    
 }

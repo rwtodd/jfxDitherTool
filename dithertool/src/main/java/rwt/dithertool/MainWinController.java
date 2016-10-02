@@ -62,8 +62,10 @@ public class MainWinController implements Initializable {
             
             @Override
             protected Ditherer computeValue() {
-                ColorSelector selector = ColorSelectionFactory.getInstance(palette.get().colors, new NaiveMetric());
-                return (new NaiveDither(selector));
+//                ColorMetric cm = new NaiveMetric();
+                ColorMetric cm = new RGBLumosityMetric(); 
+                ColorSelector selector = ColorSelectionFactory.getInstance(palette.get().colors, cm);
+                return (new Stucki(selector));
             }
             
         });

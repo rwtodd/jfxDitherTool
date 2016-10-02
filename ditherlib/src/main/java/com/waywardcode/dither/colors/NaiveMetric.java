@@ -19,8 +19,9 @@ public final class NaiveMetric implements ColorMetric {
         final double rdiff = a.getRed()-b.getRed();
         final double gdiff = a.getGreen()-b.getGreen();
         final double bdiff = a.getBlue()-b.getBlue();
-        
-        return Math.sqrt(rdiff*rdiff + gdiff*gdiff + bdiff*bdiff);
+         
+        // removed the sqrt, as it shouldn't matter for distance comparisons...
+        return rdiff*rdiff + gdiff*gdiff + bdiff*bdiff;
     }
     
 }

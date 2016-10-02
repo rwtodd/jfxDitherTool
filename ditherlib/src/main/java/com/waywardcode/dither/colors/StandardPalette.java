@@ -100,7 +100,7 @@ public enum StandardPalette {
             Color.rgb(0xFF, 0xFF, 0x55), // 14
             Color.rgb(0xFF, 0xFF, 0xFF)), // 15
     /**
-     * The default VGA 256 color palette, which actually only has 240 colors in it.
+     * The default VGA 256 color palette, which actually only has 244 colors in it.
      */
     VGA("VGA 256-Color",
             Color.rgb(0x00, 0x00, 0x00),
