@@ -24,6 +24,7 @@ import com.waywardcode.dither.colors.*;
 import com.waywardcode.dither.*;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -54,7 +55,7 @@ public class MainWinController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         scaledDim = new SimpleObjectProperty<>(new Dimension2D(320, 200));
         srcFile = new SimpleObjectProperty<>(null);
-        palette = new SimpleObjectProperty<>(new PaletteInfo(StandardPalette.EGA));        
+        palette = new SimpleObjectProperty<>(new PaletteInfo("Monochrome", new Color[] { Color.BLACK, Color.WHITE }));        
         ditherParms = new SimpleObjectProperty<>(
                 new DitherParms(DitherParms.Algorithm.NoDither, 
                                 DitherParms.Metric.Euclidean));

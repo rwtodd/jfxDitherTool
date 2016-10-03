@@ -18,11 +18,6 @@ class PaletteInfo {
     public final Color[] colors;
    
     @Override public String toString() { return name; }
-    
-    public PaletteInfo(com.waywardcode.dither.colors.StandardPalette sp) {
-        name = sp.toString();
-        colors = sp.getColors();
-    }
-   
+       
     public PaletteInfo(String n, Color[] c) { colors = c; name = n; }
 }
