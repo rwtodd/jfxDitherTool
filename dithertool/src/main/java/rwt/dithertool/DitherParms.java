@@ -13,6 +13,7 @@ package rwt.dithertool;
 public class DitherParms {
     public enum Algorithm {  
         NoDither("No Dithering"),
+        Atkinson("Atkinson"),
         FloydSteinberg("Floyd-Steinberg"),
         Jarvis("Jarvis, Judice, Ninke"),
         Stucki("Stucki"),

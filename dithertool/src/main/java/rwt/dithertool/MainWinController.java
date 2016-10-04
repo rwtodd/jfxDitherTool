@@ -166,6 +166,7 @@ public class MainWinController implements Initializable {
                 
                 Ditherer dither;
                 switch(dp.selectedAlgo) {
+                    case Atkinson:        dither = new Atkinson(selector); break;
                     case FloydSteinberg:  dither = new FloydSteinberg(selector); break;
                     case Jarvis:          dither = new JarvisJudiceNinke(selector); break;
                     case Stucki:          dither = new Stucki(selector); break;
