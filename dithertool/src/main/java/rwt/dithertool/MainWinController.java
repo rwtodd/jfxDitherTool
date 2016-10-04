@@ -242,5 +242,24 @@ public class MainWinController implements Initializable {
         }
     }
     
+    @FXML
+    private void onSave(ActionEvent event) {
+       FileChooser fileChooser = new FileChooser();
+       fileChooser.setTitle("Save GIF File");
+       fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("GIF Files","*.GIF"),
+                                                new FileChooser.ExtensionFilter("PNG Files","*.PNG"));
+       fileChooser.setInitialFileName(srcFile.get().getName() + "_dithered.gif");
+       File file = fileChooser.showSaveDialog(fnameLabel.getScene().getWindow());
+       if(file == null) return;
+
+       try {
+            Image im = ditheredImage.getImage(); //.snapshot(null,null);
+            java.awt.image.BufferedImage bim = javafx.embed.swing.SwingFXUtils.fromFXImage(im, null);    
+            String format = file.getName().toLowerCase().endsWith(".png")?"png":"gif";
+            javax.imageio.ImageIO.write(bim, format, file);
+       } catch(java.io.IOException e) {
+           System.err.println(e.toString());
+       }
+    }
     
 }

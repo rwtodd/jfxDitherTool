@@ -29,6 +29,7 @@
                 <Label fx:id="ditherLabel" />
                 <Button onAction="#getNewDither">...</Button>
             </HBox>
+            <Button onAction="#onSave">Save As</Button>
         </FlowPane>
     </top>
     <center>
