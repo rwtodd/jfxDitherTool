@@ -13,6 +13,7 @@ import javafx.beans.property.ObjectProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.fxml.*;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 
@@ -21,7 +22,7 @@ import javafx.stage.Stage;
  *
  * @author richard Todd
  */
-public class PaletteChooserController implements Initializable {
+ public class PaletteChooserController implements Initializable {
 
     @FXML private PaletteDesigner designer;
     
@@ -36,10 +37,11 @@ public class PaletteChooserController implements Initializable {
         // nothing to do at the moment.
     }        
     
-    public void tieToParent(Stage whereIAm, ObjectProperty<PaletteInfo> tgt) {
+    public void tieToParent(Stage whereIAm, ObjectProperty<PaletteInfo> tgt, Image src) {
         myStage = whereIAm;
         fromParent = tgt;
         designer.setPalette(Optional.of(tgt.get().toString()), tgt.get().colors);
+        designer.setQuantizationImage(src);
     }
     
     @FXML private void btnApply(ActionEvent ae) {

@@ -213,7 +213,7 @@ public class MainWinController implements Initializable {
           FXMLLoader ldr = new FXMLLoader(getClass().getResource("/fxml/PaletteChooser.fxml"));
           Parent root = ldr.load();
           PaletteChooserController pcc = ldr.getController();
-          pcc.tieToParent(pals, palette);
+          pcc.tieToParent(pals, palette, srcImage.getImage());
           Scene sc = new Scene(root);
           pals.setScene(sc);
           pals.setTitle("Palette Chooser");
