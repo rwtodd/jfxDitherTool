@@ -37,7 +37,7 @@ import javafx.stage.Stage;
         // nothing to do at the moment.
     }        
     
-    public void tieToParent(Stage whereIAm, ObjectProperty<PaletteInfo> tgt, Image src) {
+    public void tieToParent(Stage whereIAm, ObjectProperty<PaletteInfo> tgt, ObjectProperty<Image> src) {
         myStage = whereIAm;
         fromParent = tgt;
         designer.setPalette(Optional.of(tgt.get().toString()), tgt.get().colors);
