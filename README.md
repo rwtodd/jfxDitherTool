@@ -17,4 +17,10 @@ Here's a screenshot:
 
 ![example.PNG](example.PNG)
 
+
+... and here's an example of using the quantizer (added 2016-10-05) to get a good set 
+of colors to use:
+
+![quantizer.gif](quantizer.gif)
+
 [1]: https://github.com/rwtodd/cgaify
