@@ -1,11 +1,6 @@
-/*
- * Copyright Richard Todd. I put the code under the
- * GPL v2.0.  See the LICENSE file in the repository.
- * for more information.
- */
 package rwt.dithertool;
 
-import com.waywardcode.palette.PaletteDesigner;
+import org.rwtodd.paldesign.PaletteDesigner;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -40,7 +35,7 @@ import javafx.stage.Stage;
     public void tieToParent(Stage whereIAm, ObjectProperty<PaletteInfo> tgt, ObjectProperty<Image> src) {
         myStage = whereIAm;
         fromParent = tgt;
-        designer.setPalette(Optional.of(tgt.get().toString()), tgt.get().colors);
+        designer.setPalette(Optional.of(tgt.get().toString()), tgt.get().colors());
         designer.setQuantizationImage(src);
     }
     

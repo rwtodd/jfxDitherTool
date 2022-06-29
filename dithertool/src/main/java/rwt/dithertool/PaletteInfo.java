@@ -1,8 +1,3 @@
-/*
- * Copyright Richard Todd. I put the code under the
- * GPL v2.0.  See the LICENSE file in the repository.
- * for more information.
- */
 package rwt.dithertool;
 
 import javafx.scene.paint.Color;
@@ -13,11 +8,6 @@ import javafx.scene.paint.Color;
  * user.  I don't bother with encapsulation here. 
  * @author Richard Todd
  */
-class PaletteInfo {
-    public final String name;
-    public final Color[] colors;
-   
+record PaletteInfo(String name, Color[] colors) {   
     @Override public String toString() { return name; }
-       
-    public PaletteInfo(String n, Color[] c) { colors = c; name = n; }
 }

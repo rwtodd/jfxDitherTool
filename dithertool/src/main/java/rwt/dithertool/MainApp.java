@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package rwt.dithertool;
 
 import javafx.application.*;
@@ -22,7 +17,7 @@ public class MainApp extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-        Parent p = FXMLLoader.load(getClass().getResource("/fxml/MainWin.fxml"));
+        Parent p = FXMLLoader.load(getClass().getResource("/rwt/fxml/MainWin.fxml"));
         Scene sc = new Scene(p);
         stage.setScene(sc);
         stage.setTitle("DitherTool JFX");

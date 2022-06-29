@@ -1,11 +1,5 @@
-/*
- * Copyright Richard Todd. I put the code under the
- * GPL v2.0.  See the LICENSE file in the repository.
- * for more information.
- */
 package rwt.dithertool;
 
-import com.waywardcode.dither.Ditherer;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -20,8 +14,8 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
-import com.waywardcode.dither.colors.*;
-import com.waywardcode.dither.*;
+import org.rwtodd.dither.colors.*;
+import org.rwtodd.dither.*;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.paint.Color;
@@ -96,7 +90,7 @@ public class MainWinController implements Initializable {
 
             @Override
             protected String computeValue() {
-                return palette.get().name;
+                return palette.get().name();
             }
                 
         });
@@ -107,7 +101,7 @@ public class MainWinController implements Initializable {
 
             @Override
             protected String computeValue() {
-                return ditherParms.get().selectedAlgo.toString();
+                return ditherParms.get().algorithm().toString();
             }
                 
         });
@@ -158,14 +152,14 @@ public class MainWinController implements Initializable {
                 
                 // maybe make a factory later, but for now just switches...
                 ColorMetric cm;
-                switch(dp.selectedMetric) {
+                switch(dp.metric()) {
                     case RGBLumin:   cm = new RGBLumosityMetric(); break;
                     default:         cm = new NaiveMetric(); break;
                 }
-                ColorSelector selector = ColorSelectionFactory.getInstance(pi.colors, cm);
+                ColorSelector selector = ColorSelectionFactory.getInstance(pi.colors(), cm);
                 
                 Ditherer dither;
-                switch(dp.selectedAlgo) {
+                switch(dp.algorithm()) {
                     case Atkinson:        dither = new Atkinson(selector); break;
                     case FloydSteinberg:  dither = new FloydSteinberg(selector); break;
                     case Jarvis:          dither = new JarvisJudiceNinke(selector); break;
@@ -192,7 +186,7 @@ public class MainWinController implements Initializable {
         // create a child window...
         try {
           Stage dims = new Stage(StageStyle.DECORATED);
-          FXMLLoader ldr = new FXMLLoader(getClass().getResource("/fxml/DimensionsChooser.fxml"));
+          FXMLLoader ldr = new FXMLLoader(getClass().getResource("/rwt/fxml/DimensionsChooser.fxml"));
           Parent root = ldr.load();
           DimensionsChooserController dcc = ldr.getController();
           dcc.tieToParent(dims, scaledDim);
@@ -210,7 +204,7 @@ public class MainWinController implements Initializable {
         // create a child window...
         try {
           Stage pals = new Stage(StageStyle.DECORATED);
-          FXMLLoader ldr = new FXMLLoader(getClass().getResource("/fxml/PaletteChooser.fxml"));
+          FXMLLoader ldr = new FXMLLoader(getClass().getResource("/rwt/fxml/PaletteChooser.fxml"));
           Parent root = ldr.load();
           PaletteChooserController pcc = ldr.getController();
           pcc.tieToParent(pals, palette, srcImage.imageProperty());
@@ -228,7 +222,7 @@ public class MainWinController implements Initializable {
         // create a child window...
         try {
           Stage dipm = new Stage(StageStyle.DECORATED);
-          FXMLLoader ldr = new FXMLLoader(getClass().getResource("/fxml/DitherParmsChooser.fxml"));
+          FXMLLoader ldr = new FXMLLoader(getClass().getResource("/rwt/fxml/DitherParmsChooser.fxml"));
           Parent root = ldr.load();
           DitherParmsChooserController dpcc = ldr.getController();
           dpcc.tieToParent(dipm, ditherParms);

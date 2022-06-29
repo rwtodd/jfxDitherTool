@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" fx:controller="rwt.dithertool.MainWinController">
+    <stylesheets>
+        <URL value="@mainwin.css"/>
+    </stylesheets>
+    <top>
+        <FlowPane fx:id="controlsPane">
+            <HBox>
+                <Label fx:id="fnameLabel" />
+                <Button onAction="#getSrcFile">...</Button>
+            </HBox>
+            <HBox>
+                <Label fx:id="dimensionsLabel" />
+                <Button onAction="#getNewDims">...</Button>
+            </HBox>
+            <HBox>
+                <Label fx:id="paletteLabel" />
+                <Button onAction="#getNewPalette">...</Button>
+            </HBox>
+            <HBox>
+                <Label fx:id="ditherLabel" />
+                <Button onAction="#getNewDither">...</Button>
+            </HBox>
+            <Button onAction="#onSave">Save As</Button>
+        </FlowPane>
+    </top>
+    <center>
+        <SplitPane orientation="HORIZONTAL" snapToPixel="true">
+            <items>
+                <VBox styleClass="imgPane">
+                    <Label styleClass="imgTop">Original</Label>
+                    <ScrollPane VBox.vgrow="ALWAYS" >
+                        <javafx.scene.image.ImageView fx:id="srcImage" />
+                    </ScrollPane>
+                </VBox>
+                <VBox styleClass="imgPane">
+                    <Label styleClass="imgTop">Dithered</Label>
+                    <ScrollPane VBox.vgrow="ALWAYS" >
+                        <javafx.scene.image.ImageView fx:id="ditheredImage" />
+                    </ScrollPane>
+                </VBox>
+            </items>
+        </SplitPane>         
+    </center>
+</BorderPane>

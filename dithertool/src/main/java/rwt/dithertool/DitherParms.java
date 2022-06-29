@@ -1,8 +1,3 @@
-/*
- * Copyright Richard Todd. I put the code under the
- * GPL v2.0.  See the LICENSE file in the repository.
- * for more information.
- */
 package rwt.dithertool;
 
 /**
@@ -10,7 +5,7 @@ package rwt.dithertool;
  * UI figure out when to recalculate the image.
  * @author Richard Todd
  */
-public class DitherParms {
+public record DitherParms(Algorithm algorithm, Metric metric) {
     public enum Algorithm {  
         NoDither("No Dithering"),
         Atkinson("Atkinson"),
@@ -28,9 +23,6 @@ public class DitherParms {
         @Override public String toString() { return id; }
     };
     
-    public Algorithm selectedAlgo;
-    
-    
     public enum Metric {
         Euclidean("Euclidean Distance"),
         RGBLumin("RGB with Lumosity");
@@ -41,12 +33,5 @@ public class DitherParms {
         }
 
         @Override public String toString() { return id; }        
-    }
-    
-    public Metric selectedMetric;
-
-    public DitherParms(Algorithm a, Metric m) {
-        selectedAlgo = a;
-        selectedMetric = m;
-    }
+    }    
 }
