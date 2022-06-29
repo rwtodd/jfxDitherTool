@@ -1,10 +1,7 @@
 package rwt.dithertool;
 
-import java.net.URL;
-import java.util.ResourceBundle;
 import javafx.beans.property.ObjectProperty;
 import javafx.event.ActionEvent;
-import javafx.fxml.Initializable;
 import javafx.geometry.Dimension2D;
 import javafx.scene.control.ComboBox;
 import javafx.fxml.*;
@@ -20,7 +17,7 @@ import javafx.util.Callback;
  *
  * @author richa
  */
-public class DimensionsChooserController implements Initializable {
+public class DimensionsChooserController {
     
     private ObjectProperty<Dimension2D> fromParent;    
     private Stage myStage;
@@ -32,8 +29,8 @@ public class DimensionsChooserController implements Initializable {
     /**
      * Initializes the controller class.
      */
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
+    @FXML
+    public void initialize() {
         final Dim2DStringer dimensionStringer = new Dim2DStringer();
         
         typicalList.setCellFactory(new Callback<ListView<Dimension2D>, ListCell<Dimension2D>>() {

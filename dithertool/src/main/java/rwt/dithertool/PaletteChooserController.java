@@ -1,13 +1,14 @@
 package rwt.dithertool;
 
-import org.rwtodd.paldesign.PaletteDesigner;
-import java.net.URL;
 import java.util.Optional;
-import java.util.ResourceBundle;
+
+import org.rwtodd.paldesign.PaletteDesigner;
+
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
-import javafx.fxml.Initializable;
-import javafx.fxml.*;
+import javafx.fxml.FXML;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
@@ -17,7 +18,7 @@ import javafx.stage.Stage;
  *
  * @author richard Todd
  */
- public class PaletteChooserController implements Initializable {
+ public class PaletteChooserController {
 
     @FXML private PaletteDesigner designer;
     
@@ -27,16 +28,22 @@ import javafx.stage.Stage;
     /**
      * Initializes the controller class.
      */
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
+    @FXML
+    public void initialize() {
         // nothing to do at the moment.
     }        
     
-    public void tieToParent(Stage whereIAm, ObjectProperty<PaletteInfo> tgt, ObjectProperty<Image> src) {
+    public void tieToParent(final Stage whereIAm, ObjectProperty<PaletteInfo> tgt, ObjectProperty<Image> src) {
         myStage = whereIAm;
-        fromParent = tgt;
+        fromParent = tgt; 
         designer.setPalette(Optional.of(tgt.get().toString()), tgt.get().colors());
         designer.setQuantizationImage(src);
+        designer.heightProperty().addListener(new ChangeListener<Number>() {
+			@Override
+			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+				whereIAm.sizeToScene();
+			}	
+		});
     }
     
     @FXML private void btnApply(ActionEvent ae) {
