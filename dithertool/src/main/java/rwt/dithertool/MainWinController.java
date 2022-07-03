@@ -44,6 +44,7 @@ public class MainWinController implements Initializable {
 
 	// define the properties we care about ...
 	private ObjectProperty<Dimension2D> scaledDim;
+	private BooleanProperty preserveAspect;
 	private ObjectProperty<File> srcFile;
 	private ObjectProperty<Image> origImage;
 	private Dimension2D origDimensions;
@@ -57,6 +58,7 @@ public class MainWinController implements Initializable {
 	public void initialize(URL url, ResourceBundle rb) {
 		origImage = new SimpleObjectProperty<>(null);
 		origDimensions = null;
+		preserveAspect = new SimpleBooleanProperty(true);
 		scaledDim = new SimpleObjectProperty<>(new Dimension2D(320, 200));
 		srcFile = new SimpleObjectProperty<>(null);
 		palette = new SimpleObjectProperty<>(new PaletteInfo("Monochrome", new Color[] { Color.BLACK, Color.WHITE }));
@@ -146,7 +148,7 @@ public class MainWinController implements Initializable {
 		// bind the source image to the dimensions and file...
 		srcImage.imageProperty().bind(new ObjectBinding<Image>() {
 			{
-				bind(origImage, scaledDim);
+				bind(origImage, scaledDim, preserveAspect);
 			}
 
 			@Override
@@ -156,7 +158,7 @@ public class MainWinController implements Initializable {
 				if (orig == null || dim == null)
 					return null;
 				ImageView iv = new ImageView(orig);
-				iv.setPreserveRatio(true);
+				iv.setPreserveRatio(preserveAspect.get());
 				iv.setFitHeight(dim.getHeight());
 				iv.setFitWidth(dim.getWidth());
 				iv.setSmooth(true);
@@ -237,7 +239,7 @@ public class MainWinController implements Initializable {
 			FXMLLoader ldr = new FXMLLoader(getClass().getResource("/rwt/fxml/DimensionsChooser.fxml"));
 			Parent root = ldr.load();
 			DimensionsChooserController dcc = ldr.getController();
-			dcc.tieToParent(dims, scaledDim, origDimensions);
+			dcc.tieToParent(dims, scaledDim, preserveAspect, origDimensions);
 			Scene sc = new Scene(root);
 			dims.setScene(sc);
 			dims.setTitle("Dimensions Chooser");

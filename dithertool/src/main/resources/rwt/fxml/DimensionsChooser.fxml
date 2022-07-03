@@ -36,7 +36,7 @@
         <Label>x</Label>
         <TextField fx:id="customHeight" promptText="height" prefColumnCount="5"  />   
     </HBox>
-    
+    <CheckBox fx:id="preserveBox" text="Preserve Aspect Ratio?" allowIndeterminate="false"></CheckBox>
     <ButtonBar>
         <buttons>
            <Button onAction="#btnApply">Apply</Button>

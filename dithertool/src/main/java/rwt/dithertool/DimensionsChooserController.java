@@ -1,8 +1,10 @@
 package rwt.dithertool;
 
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.event.ActionEvent;
 import javafx.geometry.Dimension2D;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.fxml.*;
 import javafx.scene.control.ListCell;
@@ -19,10 +21,12 @@ import javafx.util.Callback;
  */
 public class DimensionsChooserController {
     
-    private ObjectProperty<Dimension2D> fromParent;    
+    private ObjectProperty<Dimension2D> fromParent;
+    private BooleanProperty preserveRatio;
     private Stage myStage;
     
     @FXML private ComboBox<Dimension2D> typicalList;
+    @FXML private CheckBox preserveBox;
     @FXML private TextField customWidth, customHeight;
     @FXML private HBox customOptions;
     
@@ -55,12 +59,15 @@ public class DimensionsChooserController {
         });
     }    
     
-    public void tieToParent(Stage whereIAm, ObjectProperty<Dimension2D> tgt, Dimension2D origDimensions) {
+    public void tieToParent(Stage whereIAm, ObjectProperty<Dimension2D> tgt, BooleanProperty aspect, Dimension2D origDimensions) {
         myStage = whereIAm;
         fromParent = tgt;
+        preserveRatio = aspect;
         if((origDimensions != null) && !typicalList.getItems().contains(origDimensions))
         	typicalList.getItems().add(origDimensions);
         typicalList.setValue(tgt.get());
+        preserveBox.setSelected(aspect.get());
+        
     }
     
     @FXML private void btnApply(ActionEvent ae) {
@@ -72,6 +79,7 @@ public class DimensionsChooserController {
             answer = typicalList.getValue();
         }
         fromParent.set(answer);
+        preserveRatio.set(preserveBox.isSelected());
     }
     
     @FXML private void btnClose(ActionEvent ae) {
