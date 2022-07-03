@@ -55,9 +55,11 @@ public class DimensionsChooserController {
         });
     }    
     
-    public void tieToParent(Stage whereIAm, ObjectProperty<Dimension2D> tgt) {
+    public void tieToParent(Stage whereIAm, ObjectProperty<Dimension2D> tgt, Dimension2D origDimensions) {
         myStage = whereIAm;
         fromParent = tgt;
+        if((origDimensions != null) && !typicalList.getItems().contains(origDimensions))
+        	typicalList.getItems().add(origDimensions);
         typicalList.setValue(tgt.get());
     }
     
